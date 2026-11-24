@@ -1,7 +1,7 @@
 # Relatorio de evidencias - Trabalho Pratico Integrador 01-06
 
 Nome: Catarina Da Costa Figueiredo   Data: 24/11/2026
-URL do repositorio Git: ____________________________
+URL do repositorio Git: https://github.com/CatarinaCFigueiredo/tp-integrador.git
 
 ## E01 - Ambiente (1 valor)
 Comandos e versoes observadas:
@@ -46,13 +46,42 @@ Sintoma, comandos de investigacao, causa-raiz, alteracao realizada, prova da rec
 
 ## E05 - Git (3 valores)
 Branch, hashes de commits, merge e tag v1.0.0:
+- **Branch de correção:** `fix/health-info`
+- **Hashes dos dois commits principais:**
+  - `ae6cf14` (`feat: ambiente integrador funcional` - commit inicial na `main`)
+  - `1afed63` (`fix: acrescentar identificacao no health` - adição de `"team": "support"` em `app.py` e validação em `tests/test_app.py`)
+- **Confirmação do merge:** Integração concluída na branch `main` via fast-forward (`Updating ae6cf14..1afed63`), com `.gitignore` a excluir `.venv` e `.pytest_cache`.
+- **Tag anotada e publicação:** Tag `v1.0.0` (`Release integrador 1.0.0`) criada sobre o commit `1afed63` e publicada no remoto `origin` (`https://github.com/CatarinaCFigueiredo/tp-integrador.git`).
 
+Conclusão: O fluxo de versionamento com branch dedicada, atualização de código e testes, integração na branch principal e etiquetagem de release foi executado e publicado de forma rastreável.
 ## E06 - Jenkins SUCCESS (4 valores)
 URL/numero do build, etapas e identificador da imagem construida:
+- **Job e número do build:** `natixis-tp-integrador` — Build `#3` (`Finished: SUCCESS`, duração: 43s)
+- **URL do job/build:** `http://127.0.0.1:8080/job/natixis-tp-integrador/3/`
+- **Agente de execução:** `ci-python-docker`
+- **Commit validado:** `46848ad` (`fix: remover comentario invalido no sh do Jenkinsfile`)
+- **Resumo das etapas:**
+  - `Checkout`: Código obtido com sucesso a partir da branch `main` (`https://github.com/CatarinaCFigueiredo/tp-integrador.git`).
+  - `Tests`: Ambiente virtual `.venv` criado, dependências instaladas e `pytest` executado com sucesso (`2 passed, 1 warning in 0.55s`).
+  - `Docker Build`: Imagem `natixis-support:ci-3` construída a partir do `Dockerfile` e validada via `docker image inspect`, devolvendo o ID `sha256:6d9e956c5f86498d6e5b66bf52ae9fb85fcbe9059540f13ed389cb5c5b9ca39d`.
+
+Conclusão: A pipeline CI/CD automatizou com êxito a verificação dos testes unitários e a construção da imagem Docker num agente dedicado.
 
 ## E07 - Jenkins FAILURE e recuperacao (2 valores)
 Build FAILURE, etapa que falhou e excerto relevante do log; build SUCCESS apos correcao:
+- **Build de falha controlada:** Build `#4` (`Finished: FAILURE`) — commit `9c74a3a` (`test: simular falha controlada na assercao de status`).
+- **Etapa que falhou:** `Tests` (a etapa seguinte `Docker Build` foi automaticamente ignorada com `Stage "Docker Build" skipped due to earlier failure(s)`).
+- **Excerto relevante do log (`Console Output` do Build `#4`):**
+  ```text
+  >       assert response.json()["status"] == "offline"
+  E       AssertionError: assert 'ok' == 'offline'
+  E         
+  E         - offline
+  E         + ok
+
+  tests/test_app.py:10: AssertionError
+  FAILED tests/test_app.py::test_health - AssertionError: assert 'ok' == 'offline'
 
 ## Verificacao final
-[ ] Dockerfile [ ] compose.yaml [ ] app.py [ ] tests/ [ ] Jenkinsfile
-[ ] Historico Git [ ] Tag v1.0.0 [ ] Evidencias E01-E07
+[x] Dockerfile [x] compose.yaml [x] app.py [x] tests/ [x] Jenkinsfile
+[x] Historico Git [x] Tag v1.0.0 [x] Evidencias E01-E07
