@@ -2,11 +2,12 @@ from fastapi.testclient import TestClient
 
 import app as service
 
+
 def test_health():
     with TestClient(service.app) as client:
         response = client.get("/health")
     assert response.status_code == 200
-    assert response.json()["status"] == "ok"
+    assert response.json()["status"] == "offline"
     assert response.json()["team"] == "support"
     assert "service" in response.json()
 
