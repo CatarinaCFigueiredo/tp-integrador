@@ -19,7 +19,7 @@ def health():
         "status": "ok",
         "service": os.getenv("SERVICE_NAME", "support-api"),
         "version": "1.0",
-        "team": "support",
+        "team": "broken",
     }
 
 
